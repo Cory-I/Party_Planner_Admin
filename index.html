@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <title>Party Planner</title>
@@ -8,5 +8,27 @@
   </head>
   <body>
     <div id="app"></div>
+    <form id="addEvent">
+      <label for="name">What is the Name of your new event?</label>
+      <input type="string" name="name" required />
+      <label for="description"
+        >How would you like to describe your new event?</label
+      >
+      <input type="string" name="description" required />
+      <label for="date"
+        >What date would you like your new event to be on?</label
+      >
+      <input type="date" name="date" required />
+      <label for="location"
+        >Where would you like your new event to be located?</label
+      >
+      <input type="string" name="location" required />
+    </form>
+    <form id="deleteEvent">
+      <label for="Id"
+        >Please input the Id of the event you want to delete below</label
+      >
+      <input type="string" name="Id" required />
+    </form>
   </body>
 </html>

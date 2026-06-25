@@ -1,17 +1,42 @@
 body {
   margin: 0;
   padding: 0 1rem;
+  background-color: #83598e;
+  color: #cba3d5;
 }
 
 h1 {
   text-align: center;
 }
-
+.parties li {
+  color: #cba3d5;
+  background-color: #83598e;
+}
 main {
   display: grid;
   gap: 1rem;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: #cba3d5;
 }
-
+button {
+  border-radius: 6px;
+  background-color: #cba3d5;
+  color: #83598e;
+  max-width: 7rem;
+  justify-self: center;
+  border: none;
+  padding: 0.15rem;
+}
+h2 {
+  padding: 0.5rem;
+  border-radius: 8px;
+  background-color: #cba3d5;
+  color: #83598e;
+}
+.parties a:hover {
+  background: #cba3d5;
+  color: #83598e;
+}
 @media (width >= 600px) {
   main {
     grid-template-columns: 1fr 1fr;
@@ -27,21 +52,11 @@ main {
 
 .parties a {
   display: block;
-  border: 1px solid #ccc;
+  border: 1px solid #cba3d5;
   border-radius: 0.25rem;
   padding: 1ch;
   text-decoration: none;
-  color: black;
-}
-
-.parties a:hover {
-  background: #eee;
-  font-style: italic;
-}
-
-.parties li.selected {
-  font-weight: bold;
-  font-style: italic;
+  color: #cba3d5;
 }
 
 form {

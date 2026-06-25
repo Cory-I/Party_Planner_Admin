@@ -1,6 +1,6 @@
 // === Constants ===
 const BASE = "https://fsa-crud-2aa9294fe819.herokuapp.com/api";
-const COHORT = ""; // Make sure to change this!
+const COHORT = "/2605-ftb-et-web-ft"; // Make sure to change this!
 const API = BASE + COHORT;
 
 // === State ===
@@ -113,8 +113,8 @@ function GuestList() {
   const $ul = document.createElement("ul");
   const guestsAtParty = guests.filter((guest) =>
     rsvps.find(
-      (rsvp) => rsvp.guestId === guest.id && rsvp.eventId === selectedParty.id
-    )
+      (rsvp) => rsvp.guestId === guest.id && rsvp.eventId === selectedParty.id,
+    ),
   );
 
   // Simple components can also be created anonymously:
@@ -148,7 +148,78 @@ function render() {
   $app.querySelector("PartyList").replaceWith(PartyList());
   $app.querySelector("SelectedParty").replaceWith(SelectedParty());
 }
+const addButton = document.createElement("button");
+const deleteButton = document.createElement("button");
 
+function renderButtons() {
+  const addForm = document.querySelector("#addEvent");
+  const deleteForm = document.querySelector("#deleteEvent");
+  const eventForm = document.querySelector("#addEvent");
+
+  // Add Button
+  addButton.textContent = "Create Event";
+  addButton.type = "submit";
+  addForm.appendChild(addButton);
+
+  // Delete Button
+  deleteButton.textContent = "Delete Event";
+  deleteForm.appendChild(deleteButton);
+
+  // Submit handler
+  eventForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(eventForm);
+    const dateFromForm = formData.get("date");
+    const isoDate = new Date(dateFromForm).toISOString();
+
+    const newEvent = {
+      name: formData.get("name"),
+      description: formData.get("description"),
+      date: isoDate,
+      location: formData.get("location"),
+    };
+
+    try {
+      await fetch(API + "/events", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newEvent),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    await getParties();
+    render();
+  });
+
+  // Delete Button
+  deleteButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(deleteForm);
+    const eventId = formData.get("Id");
+
+    if (!eventId) return;
+
+    try {
+      await fetch(`${API}/events/${eventId}`, {
+        method: "DELETE",
+      });
+
+      parties = parties.filter((p) => p.id !== Number(eventId));
+      selectedParty = null;
+
+      await getParties();
+      render();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+}
+
+renderButtons();
 async function init() {
   await getParties();
   await getRsvps();
